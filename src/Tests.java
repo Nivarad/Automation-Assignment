@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -30,7 +31,7 @@ public class Tests {
 	private WebElement customerfirstname;
 	private String other="Hi , I am Niv and I am really excited of the opportunity to be part of your"
 			+ " company , I hope you will like my assignment."; 
-	private int emailNumber=1557;
+	private int emailNumber; 
 	WebDriverWait wait; 
 	
 	
@@ -64,13 +65,16 @@ public class Tests {
 	public void signupTest()  {
 		  
 		  
+		
 		  //Enter email address
 		  //if email address taken - try another one	
 		  String alertString;
 		  String alert;
+		  Random rand=new Random();
+		  this.emailNumber=rand.nextInt(10000);
 		  while(true || !alertString.equals("An account using this email address has already been registered. Please enter a valid password or request a new one.")) {
 			  driver.findElement(By.cssSelector("[name='email_create']")).clear();
-			  driver.findElement(By.cssSelector("[name='email_create']")).sendKeys("arady"+this.emailNumber+"@gmail.com");
+			  driver.findElement(By.cssSelector("[name='email_create']")).sendKeys("arady"+emailNumber+"@gmail.com");
 			  
 			  driver.findElement(By.xpath("//button[@name=\"SubmitCreate\"]")).click();
 			  try {
@@ -81,12 +85,12 @@ public class Tests {
 			  }
 			  
 			  if(alert.trim().equals("An account using this email address has already been registered. Please enter a valid password or request a new one."))
-				  this.emailNumber++;
+				  emailNumber=rand.nextInt(10000);
 			  else 
 				  break; 
 		  }
 		  
-		 System.out.println("Mail Address Used : arady"+this.emailNumber+"@gmail.com");
+		 System.out.println("Mail Address Used : arady"+emailNumber+"@gmail.com");
 		 		
 		 //fill sign in form
 		  driver.findElement(By.id("id_gender1")).click(); 
@@ -188,7 +192,7 @@ public class Tests {
 			//create a file that contains the order details and further instructions 
 			File file=null;
 			
-			file=new File("src/OrdersCompleted/"+"arady"+this.emailNumber+".txt");	
+			file=new File("src/OrdersCompleted/"+"arady"+emailNumber+".txt");	
 			//save exam in the file
 			PrintWriter writer = null;
 			try {
